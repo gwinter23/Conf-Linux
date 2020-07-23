@@ -1,0 +1,130 @@
+-------------------------------------------HOW TO SETUP SSL LETSENCRIP FREE FOR TOMCAT AND APACHE2--------------------------------------------
+
+apt-add-repository ppa:certbot/certbot
+--------------------------------------------------------------------
+apt-get update 
+--------------------------------------------------------------------
+apt-get install certbot
+--------------------------------------------------------------------
+certbot certonly --standalone -d srgwinter.my.id 
+
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator standalone, Installer None
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for srgwinter.my.id
+Waiting for verification...
+Cleaning up challenges
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/srgwinter.my.id/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/srgwinter.my.id/privkey.pem
+   Your cert will expire on 2020-06-02. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+
+
+--------------------------------------------------------------------
+ls /etc/letsencrypt/live/srgwinter.my.id/
+README  cert.pem  chain.pem  fullchain.pem  privkey.pem
+
+untuk mengecek apakah ssl tersebut ada path tersebut. 
+
+--------------------------------------------------------------------
+nano /etc/apache2/sites-available/default-ssl.conf 
+
+SSLCertificateFile /etc/letsencrypt/live/srgwinter.my.id/cert.pem
+SSLCertificateKeyFile  /etc/letsencrypt/live/srgwinter.my.id/privkey.pem
+
+SSLCertificateChainFile /etc/letsencrypt/live/srgwinter.my.id/chain.pem
+
+------------------------------------------------------------------------
+apt-get install mod_ssl
+------------------------------------------------------------------------
+a2ensite default-ssl
+------------------------------------------------------------------------
+a2enmod ssl
+------------------------------------------------------------------------
+systemctl restart apache2
+------------------------------------------------------------------------
+Open Browser https://alamatdomain_Ygsudah_didaftarkan
+ex https://srgwinter.my.id
+
+
+
+
+
+TOMCAT SSL CONFIGURATION
+
+------------------------------------------------------------------------
+apt-add-repository ppa:certbot/certbot
+--------------------------------------------------------------------
+apt-get update 
+--------------------------------------------------------------------
+apt-get install certbot
+--------------------------------------------------------------------
+certbot certonly --standalone -d srgwinter.my.id 
+
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Plugins selected: Authenticator standalone, Installer None
+Obtaining a new certificate
+Performing the following challenges:
+http-01 challenge for srgwinter.my.id
+Waiting for verification...
+Cleaning up challenges
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/srgwinter.my.id/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/srgwinter.my.id/privkey.pem
+   Your cert will expire on 2020-06-02. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+
+
+--------------------------------------------------------------------
+ls /etc/letsencrypt/live/srgwinter.my.id/
+README  cert.pem  chain.pem  fullchain.pem  privkey.pem
+
+untuk mengecek apakah ssl tersebut ada path tersebut.
+
+--------------------------------------------------------------------
+cp /etc/letsencrypt/live/srgwinter.my.id/* /etc/tomcat8/
+Copy semua setifikat yang ke folder server.xml berada 
+--------------------------------------------------------------------
+
+--------------------------------------------------------------------
+
+nano /etc/tomcat8/server.xml
+ 
+#Konfigurasi SSL 
+
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+maxThreads="150" SSLEnabled="true">
+  <SSLHostConfig>
+    <Certificate certificateFile="/etc/tomcat8/cert.pem"
+                 certificateKeyFile="/etc/tomcat8/privkey.pem"
+                 certificateChainFile="/etc/tomcat8/chain.pem" />
+  </SSLHostConfig>
+</Connector>
+
+-------------------------------------------------------------------
+systemctl restart tomcat8
+-------------------------------------------------------------------
+Akses Tomcat dengan browser https://namadomain_yg:8443 atau dapat menggunakan 443 jika port tersebut tidak digunakan oleh apache. 
+ex https://srgwinter:8443
+
+

@@ -1,0 +1,31 @@
+upstream serverparrent.local {
+    server 172.17.77.191;
+    server 172.17.77.82;
+}
+
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name yourdomain.local yourdomain.local;
+
+    ssl on;
+    ssl_certificate         /etc/ssl/certs/nginx-selfsigned.crt;
+    ssl_certificate_key     /etc/ssl/private/nginx-selfsigned.key;
+
+    ssl_session_cache shared:SSL:20m;
+    ssl_session_timeout 10m;
+
+    ssl_prefer_server_ciphers       on;
+    ssl_protocols                   TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers                     ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
+
+    add_header Strict-Transport-Security "max-age=31536000";
+
+    location / {
+        proxy_pass http://serverparrent.local;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

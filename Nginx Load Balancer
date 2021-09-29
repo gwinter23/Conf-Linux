@@ -29,3 +29,8 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+
+
+########FOR SSL GENERATE FOR TESTING YOU CAN USE THIS COMMAND TO GET SSL SELF SIGN#########
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt

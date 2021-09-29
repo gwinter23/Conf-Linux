@@ -1,6 +1,6 @@
 upstream serverparrent.local {
-    server 172.17.77.191;
-    server 172.17.77.82;
+    server 192.x.x.x;
+    server 192.x.x.x;
 }
 
 server {

@@ -1,0 +1,51 @@
+# Generate SSL
+keytool -genkey -alias esmc.self.net -keyalg RSA -keystore /etc/pki/keystore
+
+# backup Konfigurasi tomcat 
+cp /etc/tomcat9/server.xml /etc/tomcat9/server.xml.backup
+
+# Check dan masukkan konfigurasi seperti ini 
+
+<Connector port="8443" protocol="HTTP/1.1"
+                connectionTimeout="20000"
+                redirectPort="8443"
+                SSLEnabled="true"
+                scheme="https"
+                secure="true"
+                sslProtocol="TLS"
+                keystoreFile="/etc/pki/keystore"
+                keystorePass="passwordkeystore" />
+
+# Restart Tomcat 
+systemctl restart tomcat9 
+
+# Check Service
+systemctl status tomcat9
+
+#set IP tables agar dapat diacces menggunakan port umum yaitu 80 untuk HTTP dan 443 untuk HTTPS
+iptables -A PREROUTING -t nat -i ens3 -p tcp --dport 80 -j REDIRECT --to-port 8080
+
+iptables -A PREROUTING -t nat -i ens3 -p tcp --dport 443 -j REDIRECT --to-port 8443
+
+# Lakukan instalasi iptables Persistent untuk save rules 
+apt install -y iptables-persistent
+
+# IP Tables Save Rules
+iptables-save > /etc/iptables/rules.v4
+
+# Check Configuration
+nano /etc/iptables/rules.v4
+
+# Sebagai Contoh akan seperti ini 
+*nat
+:PREROUTING ACCEPT [947:135658]
+:INPUT ACCEPT [303:42422]
+:OUTPUT ACCEPT [222:18568]
+:POSTROUTING ACCEPT [222:18568]
+-A PREROUTING -i ens3 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 8080
+-A PREROUTING -i ens3 -p tcp -m tcp --dport 443 -j REDIRECT --to-ports 8443
+COMMIT
+
+ atau 
+
+

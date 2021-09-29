@@ -1,0 +1,274 @@
+
+#######################################################################################
+########ESETPROTECT _ UBUNTU 20.04 _ BY RAM_ MYSQL 8.0_ODB8.0.17_NONPROXY##############
+#######################################################################################
+
+#Unduh pakage apt set untuh mysql 
+wget https://repo.mysql.com//mysql-apt-config_0.8.17-1_all.deb
+
+#Add repository qt4 
+add-apt-repository ppa:rock-core/qt4
+
+#instalasi pakage apt set 
+dpkg -i mysql-apt-config_0.8.17-1_all.deb 
+
+#lakukan update serta upgade pakage
+apt update && sudo apt upgrade
+
+#lakukan instalasi pakage terkait depdencies EP
+apt install -y wget lshw default-jdk tomcat9 unixodbc libodbc1 xvfb cifs-utils libqtwebkit4 krb5-user winbind ldap-utils snmp ldap-utils libsasl2-modules-gssapi-mit selinux-policy-dev samba apache2 apache2-utils libapache2-mod-wsgi
+
+
+#### gunakan perintah tersebut digunakan untuk melihat ketersediaan pakage mysql######
+
+dpkg -l | grep mysql
+
+apt list | grep mysql
+
+# Lakukan instalasi pakage mysql-community-server untuk mysql database
+apt-get install mysql-community-server 
+
+pada tahap proses instalasi pakage terdapat type authentication plugin dapat
+memilihkan dengan backward compatibility 5.x dan juga set password pada mysql
+
+jika set password tidak muncul anda dapat menggunakan alternatif perintah ini 
+
+mysql_secure_installation
+
+# cek status service mysql
+systemctl status mysql
+
+# cek status mysql dengan login 
+mysql -u root -p 
+
+dpat disesuaikan dengan user yang dibuat 
+
+# Tahap ini bertujuan untuk database pada mysql agar sesuai dengan kebutuhan atay system requirement pada eset 
+nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+anda dapat menggunakan editor tools selain dari nano
+
+# Edit dan tambahkan pada bagian [mysqld] dengan konfigurasi berikut
+
+####################################
+# ESET Requirement
+max_allowed_packet = 500M
+log_bin_trust_function_creators=1
+innodb_log_file_size = 200M
+innodb_log_files_in_group = 4
+innodb_lock_wait_timeout=600
+####################################
+
+#Setelah itu lakukan restart service pada mysql 
+systemctl restart mysql
+
+# Test kembali mysql dan juga login 
+systemctl status mysql
+
+mysql -u root -p 
+
+# Untuk instalasi EP atau eset protect membutuhkan ODBC module sebagai perantara connection 
+Versi dari ODBC cukup spesifik saat ini anda dapat menggunakan versi 8.0.17
+
+# anda dapat meunduh module odbc tersebut terlebih dahulu 
+wget https://cdn.mysql.com/archives/mysql-connector-odbc-8.0/mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit.tar.gz
+
+# Ektrat paket tersebut 
+tar xvzf mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit.tar.gz
+
+# Copy odbc module yang sudah diektrak pada file tersebut ke file dibawah ini 
+cp mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit/lib/libmyodbc8* /usr/lib/x86_64-linux-gnu/odbc/
+
+# cek file nya 
+ls -lsb /usr/lib/x86_64-linux-gnu/odbc/
+
+# Cek odbc informasi dengan 
+odbcinst -j
+
+# Set ODBC Driver dan setup pada file konfigurasi ini 
+nano /etc/odbcinst.ini
+
+# Tambahkan script atau konfigurasi odbc sebagai contoh dibawah ini 
+
+[MySQL ODBC 8.0 Unicode Driver]
+Driver=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8w.so
+#SETUP=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8S.so
+UsageCount=1
+
+[MySQL ODBC 8.0 ANSI Driver]
+Driver=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8a.so
+#SETUP=/usr/lib/x86_64-linux-gnu/odbc/libmyodbc8S.so
+UsageCount=1
+
+# Setelah itu lakukan pengunduhkan pakage instalasi EP 
+ERA WAR - WEBCONSOLE
+Server-linux - SERVICE EP
+Agent - AGENT 
+RD Sensor - Sebagai Sensor pada EP
+
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server-linux-x86_64.sh
+wget https://download.eset.com/com/eset/apps/business/era/agent/latest/agent-linux-x86_64.sh
+wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor-linux-x86_64.sh
+
+# Copy era.war file ke directory web tomcat 
+cp era.war /var/lib/tomcat9/webapps/
+
+# Lakukan restart pada tomcat 
+systemctl restart tomcat9
+
+# lakukan chmod pada pakage instalasi service EP beserta lainnya 
+chmod +x server-linux-x86_64.sh
+chmod +x agent-linux-x86_64.sh
+chmod +x rdsensor-linux-x86_64.sh
+
+# lakukan proses intalasi service EP/ server-linux contohnya seperti ini 
+./server-linux-x86_64.sh --skip-license --db-driver="MySQL ODBC 8.0 Unicode Driver" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=passwordDB --server-root-password=password --db-user-username=root --db-user-password=password --cert-hostname="*" --enable-imp-program
+
+
+tunggu hingga proses instalasi selesai, jika terjadi eror dapat check pada bagian set pada db yaitu "nano /etc/mysql/mysql.conf.d/mysqld.cnf" dan juga odbc "nano /etc/odbcinst.ini"
+
+# lakukan instalasi konfigurasi agent agar terkoneksi ke EP berikut contohnya 
+./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="Password untuk Login Web Console" --cert-auto-confirm --enable-imp-program
+
+# instalasi RD Sensor
+./rdsensor-linux-x86_64.sh --skip-license
+
+
+
+# Ceck mengenai log password atau save configuration 
+nano /etc/opt/eset/RemoteAdministrator/Server/StartupConfiguration.ini
+
+
+##############################################################################################
+###################Konfigurasi PROXY sebagai cache pada EP server ############################
+
+
+# Intallasi Squid Pakage 
+apt-get install squid
+
+# setelah instalasi squid pakage selesai backup default confg proxy squid
+mv /etc/squid/squid.conf /etc/squid/squid.conf.bak
+
+# buat file konfigurasi pada squid 
+nano /etc/squid/squid.conf
+
+# setelah itu masukkan script atau conf squid proxy 
+
+
+##############################################
+# —— Konfigurasi Squid ————
+
+acl SSL_ports port 443
+acl Safe_ports port 80 # http
+acl Safe_ports port 21 # ftp
+acl Safe_ports port 443 # https
+acl Safe_ports port 70 # gopher
+acl Safe_ports port 210 # wais
+acl Safe_ports port 1025-65535 # unregistered ports
+acl Safe_ports port 280 # http-mgmt
+acl Safe_ports port 488 # gss-http
+acl Safe_ports port 591 # filemaker
+acl Safe_ports port 777 # multiling http
+acl Safe_ports port 53
+acl CONNECT method CONNECT
+
+#Cache_peer di isi IP Proxy Utama Chaining ke Proxy Utama, jika tidak ada chaining hilangkan command di bawah ini
+cache_peer 10.1.12.41 parent 3128 0 no-query
+prefer_direct off
+never_direct allow all
+
+# Deny requests to certain unsafe ports
+http_access deny !Safe_ports
+
+# Deny CONNECT to other than secure SSL ports
+http_access deny CONNECT !SSL_ports
+
+# Only allow cachemgr access from localhost
+http_access allow localhost manager
+http_access deny manager
+#detection Update
+acl allowed dstdomain update.eset.com um01.eset.com um02.eset.com um03.eset.com um04.eset.com um05.eset.com um06.eset.com um07.eset.com um08.eset.com um09.eset.com um10.eset.com um11.eset.com um12.eset.com um13.eset.com um21.eset.com um23.eset.com um01.ru.eset.com um01.cn.eset.com
+#pico update
+acl allowed dstdomain pico.eset.com www.eset.com
+#product installers updates
+acl allowed dstdomain download.eset.com
+#expire date
+acl allowed dstdomain expire.eset.com edf.eset.com
+#support request
+acl allowed dstdomain suppreq.eset.eu
+#allow communication with ESET Secure Authentication
+acl allowed dstdomain ecp.eset.systems esa.eset.com m.esa.eset.com repository.eset.com
+#ESET Live Grid
+acl allowed dstdomain a.cwip.eset.com ae.cwip.eset.com c.cwip.eset.com ce.cwip.eset.com dnsj.e5.sk dnsje.e5.sk i1.cwip.eset.com i1e.cwip.eset.com i3.cwip.eset.com i4.cwip.eset.com i4e.cwip.eset.com u.cwip.eset.com ue.cwip.eset.com c.eset.com a.c.eset.com u.eset.com i1.c.eset.com i3.c.eset.com i4.c.eset.com
+#Advanced Machine Learning:
+acl allowed dstdomain h1-aidc01.eset.com h3-aidc01.eset.com h5-aidc01.eset.com
+#To submit suspicious files and anonymous statistical information to ESET’s Threat Lab:
+acl allowed dstdomain tsm09.eset.com tsm10.eset.com tsm11.eset.com tsm12.eset.com tsm13.eset.com tsm14.eset.com tsm15.eset.com tsm16.eset.com ts.eset.com
+#To use the Parental Control module (ESET Smart Security only):
+acl allowed dstdomain h1-arsp01-v.eset.com h1-arsp02-v.eset.com h3-arsp01-v.eset.com h3-arsp02-v.eset.com h5-arsp01-v.eset.com h5-arsp02-v.eset.com
+#To use ESET Password Manager
+acl allowed dstdomain ext-pwm.eset.com eset-870273198.eu-west-1.elb.amazonaws.com esetpwmdata-1.s3.amazonaws.com s3-3-w.amazonaws.com
+#To use the Antispam module
+acl allowed dstdomain h1-ars01-v.eset.com h1-ars02-v.eset.com h1-ars03-v.eset.com h1-ars04-v.eset.com h1-ars05-v.eset.com h3-ars01-v.eset.com h3-ars02-v.eset.com h3-ars03-v.eset.com h3-ars04-v.eset.com h3-ars05-v.eset.com h5-ars01-v.eset$
+acl allowed dstdomain ds1-uk-rules-1.mailshell.net ds1-uk-rules-2.mailshell.net ds1-uk-rules-3.mailshell.net fh-uk11.mailshell.net
+#To ensure proper functionality of linking and redirection from your ESET product’s graphical user interface:
+acl allowed dstdomain go.eset.eu support-go.eset.eu h1-redir02-v.eset.com h3-redir02-v.eset.com
+#active mobile security
+acl allowed dstdomain reg01.eset.com reg04.eset.com
+
+#ESET Data Framework (Anti-Theft, ESET License Administrator, Parental control, Web control):
+acl allowed dstdomain edf.eset.com edfpcs.trafficmanager.net bal-edf-pcs-app-vmss-01.westus.cloudapp.azure.com bal-edf-pcs-app-vmss-02.westus.cloudapp.azure.com h1-edfspy02-v.eset.com h1-edfspy02-v.eset.com h1-arse01-v.eset.com h1-arse02$
+#ERA/ESMC Repository – repository.eset.com (ESET Remote Administrator 6.x and ESET Security Management Center 7):
+acl allowed dstdomain repository.eset.com
+#push notification
+acl allowed dstdomain epns.eset.com h1-epns01-v.eset.com h1-epns02-v.eset.com h3-epns01-v.eset.com h3-epns02-v.eset.com h5-epns01.eset.com h5-epns02.eset.com h1-epnsbroker01.eset.com h1-epnsbroker02.eset.com h3-epnsbroker01.eset.com h3-e$
+#EDTD
+acl allowed dstdomain r.edtd.eset.com d.edtd.eset.com
+#Services (activation, expiration, IP location, trace, versioncheck, redirector, in-product images & messages, SSL certificate check):
+acl allowed dstdomain proxy.eset.com h1-weblb01-v.eset.com h3-weblb01-v.eset.com edf.eset.com edfpcs.trafficmanager.net bal-edf-pcs-app-vmss-01.westus.cloudapp.azure.com bal-edf-pcs-app-vmss-02.westus.cloudapp.azure.com register.eset.com$
+#Online help and Knowledgebase:
+acl allowed dstdomain help.eset.com support.eset.com int.form.eset.com
+#ESET MSP
+acl allowed dstdomain ftp.eset.sk mspapi.esetsoftware.com go.eset.com
+#DNS load balancers
+acl allowed dstdomain h1-f5lb01-s.eset.com h3-f5lb01-s.eset.com h5-f5lb01-s.eset.com
+#telementery
+acl allowed dstdomain gallup.eset.com
+
+http_access allow allowed
+http_access deny all
+# Squid normally listens to port 3128
+http_port 3128
+
+
+# Uncomment and adjust the following to add a disk cache directory.
+cache_dir ufs /var/spool/squid 5000 16 256 max-size=200000000
+
+# Leave coredumps in the first cache dir
+coredump_dir /var/spool/squid
+
+# Add any of your own refresh_pattern entries above these.
+refresh_pattern ^ftp: 1440 20% 10080
+refresh_pattern ^gopher: 1440 0% 1440
+refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
+refresh_pattern (Release|Packages(.gz)*)$ 0 20% 2880
+# example lin deb packages
+#refresh_pattern (\.deb|\.udeb)$ 129600 100% 129600
+refresh_pattern . 0 20% 4320
+
+# ——————- End Konfigurasi Squid ———————–
+################################################################################
+
+# Lakukan restart service pada squid untuk menerapkan update konfigurasi 
+systemctl restart squid 
+
+# setelah itu dapat coba cek akses dengan contoh seperti 
+wget www.google.com -e use_proxy=yes -e http_proxy=localhost:3128
+
+# setelah dapat dipastikan proxy run maka dapat di set pada eset protect 
+
+
+#############################################################################################################################
+########################################################    END    ##########################################################
+

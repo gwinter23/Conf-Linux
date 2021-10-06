@@ -30,6 +30,7 @@ server {
     }
 }
 
+configure on you base virtual host file ex : /etc/nginx/sites-available/ or /etc/nginx/sites-enable/
 
 ########FOR SSL GENERATE FOR TESTING YOU CAN USE THIS COMMAND TO GET SSL SELF SIGN#########
 

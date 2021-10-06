@@ -31,6 +31,7 @@ server {
 }
 
 configure on you base virtual host file ex : /etc/nginx/sites-available/ or /etc/nginx/sites-enable/
+ln -s /etc/nginx/sites-available/gwinter.local /etc/nginx/sites-enabled/gwinter.local
 
 ########FOR SSL GENERATE FOR TESTING YOU CAN USE THIS COMMAND TO GET SSL SELF SIGN#########
 

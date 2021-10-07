@@ -1,0 +1,34 @@
+Good Day 
+
+
+You can set stats features default HA proxy 
+1. acces you configure file on your ha proxy example on : /etc/haproxy/haproxy.cfg 
+
+2. update you configure edit with you any editor text like : nano,vim, gedit what ever 
+
+listen  stats
+        bind            172.18.89.100:1930
+        mode            http
+        log             global
+
+        maxconn 10
+
+        clitimeout      100s
+        srvtimeout      100s
+        contimeout      100s
+        timeout queue   100s
+
+        stats enable
+        stats hide-version
+        stats refresh 30s
+        stats show-node
+        stats auth admin:password
+        stats uri  /haproxy?stats
+
+3. Close you edit and save update
+
+4. Restart you service with command : systemctl restart haproxy
+your sevice running properly and the next access this example url 
+
+5. Acess stats : http://IP or domain:1930/haproxy?stats
+

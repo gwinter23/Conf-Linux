@@ -7,7 +7,7 @@ You can set stats features default HA proxy
 2. update you configure edit with you any editor text like : nano,vim, gedit what ever 
 
 listen  stats
-        bind            172.18.89.100:1930
+        bind            192.168.x.x:1930
         mode            http
         log             global
 

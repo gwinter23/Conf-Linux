@@ -33,7 +33,7 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 
-#listen  mdm
+#listen server-mdm
         #bind 0.0.0.0:9980
         #mode tcp
         #timeout connect  4s
@@ -42,9 +42,9 @@ defaults
         #option tcp-check
         #tcp-check connect
         #source 0.0.0.0  usesrc client
-        #server mdm 192.168.155.227:9980 check
+        #server mdm 192.168.100.x:9980 check
 
-#listen  mdm1
+#listen  server-mdm1
         #bind 0.0.0.0:9981
         #mode tcp
         #timeout connect  4s
@@ -53,7 +53,8 @@ defaults
         #option tcp-check
         #tcp-check connect
         #source 0.0.0.0  usesrc client
-        #server mdm 192.168.155.227:9981 check
+        #server mdm 192.168.120.x:9981 check
+        
 listen  mdm1
         bind 0.0.0.0:3200
         mode tcp
@@ -63,7 +64,7 @@ listen  mdm1
         option tcp-check
         tcp-check connect
         #source 0.0.0.0  usesrc client
-        server mdm 192.168.155.227:3200 check
+        server mdm 192.168.155.x:3200 check
 
 listen  mdm2
         bind 0.0.0.0:3201
@@ -74,16 +75,16 @@ listen  mdm2
         option tcp-check
         tcp-check connect
         #source 0.0.0.0  usesrc client 
-        server mdm 192.168.155.227:3201 check
+        server mdm 192.168.130.x:3201 check
 
 
 #frontend MyFrontend
-   #bind    139.162.49.244:9980
+   #bind    192.168.100.x:9980
    #default_backend     TransparentBack_http
 
 #backend TransparentBack_http
    #mode            tcp
    #source 0.0.0.0  usesrc client
-   #server          MyWebServer 192.168.155.227:9980
+   #server          MyWebServer 192.168.155.x:9980
 
 file access configure on /etc/haproxy/haproxy.cfg

@@ -1,0 +1,21 @@
+I am in want to share to get SSL public for you on smal enfironment or lab testing 
+
+Requirement 
+You are must have a domain
+and public ip to try this command and generate SSL 
+
+you can use this command on your server,for me i tested on ubuntu server 20.04 lts 
+
+#certbot certonly -d console.gwinter.tech 
+
+#ls -lsb /etc/letsencrypt/live/console.gwinter.tech/
+
+generaly you can get ssl in standart .pem or .crt
+you can directly use this cert for you service ex web service 
+
+
+for HA proxy you can combine certificate file and certificate key on one single file SSL 
+
+#cd /etc/letsencrypt/live/console.gwinter.tech/
+
+#cat cert.pem privkey.pem > all.pem

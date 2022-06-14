@@ -33,8 +33,8 @@ defaults
 	errorfile 503 /etc/haproxy/errors/503.http
 	errorfile 504 /etc/haproxy/errors/504.http
 
-listen  ep1
-        bind 0.0.0.0:2001 ssl crt /etc/letsencrypt/live/console.gwinter.tech/all.pem 
+listen  akses-server1
+        bind 0.0.0.0:2001 ssl crt /etc/letsencrypt/live/yourdomain/all.pem 
         mode http
         timeout connect  4s
         timeout client   3m
@@ -44,8 +44,8 @@ listen  ep1
         #source 0.0.0.0  usesrc client 
         server ep 10.8.0.7:443 ssl verify none 
 
-listen  eei1
-        bind 0.0.0.0:2005 ssl crt /etc/letsencrypt/live/console.gwinter.tech/all.pem
+listen  akses-server2
+        bind 0.0.0.0:2005 ssl crt /etc/letsencrypt/live/yourdomain/all.pem
         mode http
         timeout connect  4s
         timeout client   3m

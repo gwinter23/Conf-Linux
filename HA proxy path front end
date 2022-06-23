@@ -1,0 +1,14 @@
+frontend http
+  bind *:80
+  acl url_data path_beg -i /data/
+  acl url_bengal path_beg -i /bengal/
+  use_backend backend-data if url_data
+  use_backend backend-bengal if url_bengal
+
+backend backend-data
+  http-request set-path %[path,regsub(^/a/,/,g)]
+  server a appa.example.com:8081
+
+backend backend-bengal
+  http-request set-path %[path,regsub(^/b/,/,g)]
+  server b appb.example.com:8080

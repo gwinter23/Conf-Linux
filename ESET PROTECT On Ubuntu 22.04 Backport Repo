@@ -1,0 +1,97 @@
+
+################ Ubuntu 22.04 LTS BackPort Repo - Experimental #######################
+
+
+wget https://repo.mysql.com//mysql-apt-config_0.8.22-1_all.deb
+dpkg - mysql-apt-config_0.8.22-1_all.deb
+dpkg -i mysql-apt-config_0.8.22-1_all.deb
+
+## ada perbedaan di libqtwebkit4 ##
+apt-get update
+apt-get install libqt5webkit5
+
+
+echo "deb http://security.ubuntu.com/ubuntu impish-security main" | sudo tee /etc/apt/sources.list.d/impish-security.list
+apt-get update
+
+apt-get install libssl1.1
+apt-get install mysql-community-server
+mysql -u root -p
+
+## ada perbedaan di pakage libapache2-mod-wsgi ###
+
+apt install -y wget lshw default-jdk tomcat9 unixodbc libodbc1 xvfb cifs-utils krb5-user winbind ldap-utils snmp ldap-utils libsasl2-modules-gssapi-mit selinux-policy-dev samba apache2 apache2-utils libapache2-mod-wsgi-py3
+systemctl status tomcat9
+
+nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+
+####################################
+# ESET Requirement
+max_allowed_packet = 500M
+log_bin_trust_function_creators=1
+innodb_log_file_size = 200M
+innodb_log_files_in_group = 4
+innodb_lock_wait_timeout=600
+####################################
+
+systemctl restart mysql
+
+
+#### ada perbedaan disini ada di letak odbc nya ####
+wget https://cdn.mysql.com/archives/mysql-connector-odbc-8.0/mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit.tar.gz
+
+mysql -u root -p
+
+apt-get install odbcinst
+odbcinst -j  ## buat nyari path configurasi odbcnya dimana 
+grep -r -i "odbc" /  ## BUAT NYARI odbc 
+
+tar xvzf mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit.tar.gz
+
+cp mysql-connector-odbc-8.0.17-linux-ubuntu18.04-x86-64bit/lib/libmyodbc8* /usr/lib/x86_64-linux-gnu/
+
+ls /usr/lib/x86_64-linux-gnu/
+
+
+## di odbcinst dibedain juga path odbc nya ##
+
+nano /etc/odbcinst.ini
+
+
+[MySQL ODBC 8.0 Unicode Driver]
+Driver=/usr/lib/x86_64-linux-gnu/libmyodbc8w.so
+#SETUP=/usr/lib/x86_64-linux-gnu/libmyodbc8S.so
+UsageCount=1
+
+
+[MySQL ODBC 8.0 ANSI Driver]
+Driver=/usr/lib/x86_64-linux-gnu/libmyodbc8a.so
+#SETUP=/usr/lib/x86_64-linux-gnu/libmyodbc8S.so
+UsageCount=1
+
+
+
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server-linux-x86_64.sh
+
+
+cp era.war /var/lib/tomcat9/webapps/
+systemctl restart tomcat9
+
+
+chmod +x server-linux-x86_64.sh
+./server-linux-x86_64.sh --skip-license --db-driver="MySQL ODBC 8.0 Unicode Driver" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=webadmin123 --server-root-password=webadmin123 --db-user-username=root --db-user-password=webadmin123 --cert-hostname="*" --enable-imp-program
+systemctl status eraserver
+tail -f /var/log/eset/RemoteAdministrator/Server/trace.log
+
+
+wget https://download.eset.com/com/eset/apps/business/era/agent/latest/agent-linux-x86_64.sh
+wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor-linux-x86_64.sh
+ls
+
+chmod +x agent-linux-x86_64.sh
+./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="webadmin123" --cert-auto-confirm --enable-imp-program
+
+chmod +x rdsensor/latest/rdsensor-linux-x86_64
+./rdsensor/latest/rdsensor-linux-x86_64 --skip-license

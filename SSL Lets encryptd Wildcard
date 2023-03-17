@@ -1,0 +1,8 @@
+apt install certbot
+
+certbot certonly --agree-tos \
+--manual \
+--preferred-challenges dns \
+--email youemail@addres.com \
+--server https://acme-v02.api.letsencrypt.org/directory \
+-d "*.youdomain.use"

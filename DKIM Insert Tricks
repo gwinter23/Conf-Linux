@@ -1,0 +1,12 @@
+DKIM option can tag some email with signature, sender can check this signature email for legitimate status on email
+
+chalenge to use dkim on generate signature and insert on DNS manager, many DNS manager use unique value isert on manny situation 
+insert value DKIM not singgle shot clear to apply and running well, i dont know this documentation can help you but this action me to sharing 
+my knowledge insert DKIM.
+
+Cloud Flare Domain Manager : unique insert ",enter,() If this unique insert is written, the dkim value will change when the ID is published
+                            impact DKIM cannot syncronize between you DKIM on you use and dkim insert on your machine. 
+Niaga Hoster DNS Manager : Unique insert space,enter cannot can be apply, DKIM not valid if you using this insert, my tricks parse manualy using notepad++
+                          to one line lenght DKIM value. 
+CPANEL DNS Manager : Unique insert enter cannot be apply, and name DKIM selector must be to definition with you domain symbol @ insert with you domain. 
+BIND Cli RAW DNS : you can freely copy value generate DKIM, but you check tag name selector with position value insert. 

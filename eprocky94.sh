@@ -19,7 +19,7 @@ TEMP_PASSWORD=$(sudo grep 'temporary password' /var/log/mysqld.log | awk '{print
 
 # Mengotomatiskan mysql_secure_installation
 sudo mysql -u root -p"$TEMP_PASSWORD" --connect-expired-password <<EOF
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Prosperitats12345';
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'ts12345';
 UNINSTALL PLUGIN validate_password;
 SET GLOBAL validate_password.length = 6;
 SET GLOBAL validate_password.policy = LOW;
@@ -112,9 +112,9 @@ chmod +x eset-bridge.x86_64.bin
 
 echo ### Deploy ESET PROTECT dan Part pendukungnya ####
 
-./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=Prosperitats12345 --server-root-password=Prosperitats12345 --db-user-username=root --db-user-password=Prosperitats12345 --cert-hostname="*" --enable-imp-program
+./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=ts12345 --server-root-password=ts12345 --db-user-username=root --db-user-password=ts12345 --cert-hostname="*" --enable-imp-program
 
-./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="Prosperitats12345" --cert-auto-confirm --enable-imp-program
+./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="ts12345" --cert-auto-confirm --enable-imp-program
 
 ./eset-bridge.x86_64.bin --skip-license
 

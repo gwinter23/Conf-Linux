@@ -115,7 +115,7 @@ echo "### Deploy ESET PROTECT dan Part pendukungnya ####"
 echo
 echo
 
-sudo ./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=ts12345 --server-root-password=ts12345 --db-user-username=root --db-user-password=ts12345 --cert-hostname="*" --enable-imp-program
+sudo ./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=ts12345 --server-root-password=ts@12345678 --db-user-username=root --db-user-password=ts12345 --cert-hostname="*" --enable-imp-program
 
 echo "Deploy ESET BRIDGE"
 sudo ./eset-bridge.x86_64.bin --skip-license
@@ -138,7 +138,7 @@ sleep 3m
 echo "agent deploy"
 echo 
 echo 
-sudo ./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="ts12345" --cert-auto-confirm --enable-imp-program
+sudo ./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password="ts@12345678" --cert-auto-confirm --enable-imp-program
 
 echo "ESET PROTECT Installer Script is Finish check history script untuk mencari error atau issue Thanks, Build By RAM"
 

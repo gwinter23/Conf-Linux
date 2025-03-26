@@ -120,8 +120,8 @@ sudo ./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname
 echo "Deploy ESET BRIDGE"
 sudo ./eset-bridge.x86_64.bin --skip-license
 
-echo "Deploy RD Sensor"
-sudo ./rdsensor-linux-x86_64.sh --skip-license
+#echo "Deploy RD Sensor"
+#sudo ./rdsensor-linux-x86_64.sh --skip-license
 
 echo "##### Insert Era War to Tomcat folder #####"
 cp era.war /var/lib/tomcat/webapps/

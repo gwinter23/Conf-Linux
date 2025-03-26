@@ -118,7 +118,7 @@ echo
 sudo ./server-linux-x86_64.sh --skip-license --db-driver="MariaDB" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=ts12345 --server-root-password=ts@12345678 --db-user-username=root --db-user-password=ts12345 --cert-hostname="*" --enable-imp-program
 
 echo "Deploy ESET BRIDGE"
-sudo ./eset-bridge.x86_64.bin --skip-license
+sudo ./eset-bridge.x86_64.bin -y
 
 #echo "Deploy RD Sensor"
 #sudo ./rdsensor-linux-x86_64.sh --skip-license

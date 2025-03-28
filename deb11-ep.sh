@@ -1,6 +1,7 @@
 #!/bin/bash
 export LC_ALL="en_US.UTF-8"
 echo "##### Download Pakage Installer ESET PROTECT ####"
+echo "##### Script Build BY RAM ####"
 echo ### Download Installer EP dan Part lainnya ###
 echo "###################checkfile era war req data#####################"
     erawar=era.war
@@ -178,6 +179,10 @@ echo
 apt-get install libxkbcommon-x11-0 libgbm-dev -y 
 echo 
 echo
+echo "##### IF You Look This , the script Assist Installing end####"
+echo "##### Thanks on our god####"
+echo "#####----------END----------####"
+
 
 
 

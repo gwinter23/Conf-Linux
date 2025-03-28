@@ -86,15 +86,11 @@ echo
 echo 
 echo
 echo "##### install depedencies standart EP #####"
-apt-get install openssl xvfb cifs-utils krb5-user ldap-utils ldap-utils libsasl2-modules-gssapi-mit snmp selinux-policy-dev samba lshw openjdk-17-jdk tomcat9 libxkbcommon-x11-0 libgbm-dev-y
+apt-get install openssl xvfb cifs-utils krb5-user ldap-utils ldap-utils libsasl2-modules-gssapi-mit snmp selinux-policy-dev samba lshw openjdk-17-jdk tomcat9 -y
 echo 
 echo
 echo "##### MYSQL Database Install and configuration#####"
 echo 
-echo "mysql-server mysql-server/root_password password RunIF@!123!" | sudo debconf-set-selections
-echo "mysql-server mysql-server/root_password_again password RunIF@!123!" | sudo debconf-set-selections
-echo "mysql-server mysql-server/default-auth-override select Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)" | sudo debconf-set-selections
-echo "mysql-apt-config mysql-apt-config/select-server select mysql-8.0" | sudo debconf-set-selections
 echo 
 dpkg -i mysql-apt-config_0.8.33-1_all.deb
 echo
@@ -102,8 +98,12 @@ echo
 apt-get update -y 
 echo 
 echo
-DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y
-#apt-get install mysql-server -y
+#echo "mysql-server mysql-server/root_password password RunIF@!123!" | sudo debconf-set-selections
+#echo "mysql-server mysql-server/root_password_again password RunIF@!123!" | sudo debconf-set-selections
+#echo "mysql-server mysql-server/default-auth-override select Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)" | sudo debconf-set-selections
+#echo "mysql-apt-config mysql-apt-config/select-server select mysql-8.0" | sudo debconf-set-selections
+#DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y
+apt-get install mysql-server -y
 echo
 echo
 echo
@@ -180,7 +180,9 @@ echo "agent deploy"
 ./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password='RunIF@!123!' --cert-auto-confirm --enable-imp-program
 echo
 echo 
-
+apt-get install libxkbcommon-x11-0 libgbm-dev -y 
+echo 
+echo
 
 
 

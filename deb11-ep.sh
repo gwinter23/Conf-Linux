@@ -98,11 +98,6 @@ echo
 apt-get update -y 
 echo 
 echo
-#echo "mysql-server mysql-server/root_password password RunIF@!123!" | sudo debconf-set-selections
-#echo "mysql-server mysql-server/root_password_again password RunIF@!123!" | sudo debconf-set-selections
-#echo "mysql-server mysql-server/default-auth-override select Use Legacy Authentication Method (Retain MySQL 5.x Compatibility)" | sudo debconf-set-selections
-#echo "mysql-apt-config mysql-apt-config/select-server select mysql-8.0" | sudo debconf-set-selections
-#DEBIAN_FRONTEND=noninteractive apt-get install mysql-server -y
 apt-get install mysql-server -y
 echo
 echo

@@ -86,7 +86,7 @@ echo
 echo 
 echo
 echo "##### install depedencies standart EP #####"
-apt-get install openssl xvfb cifs-utils krb5-user ldap-utils ldap-utils libsasl2-modules-gssapi-mit snmp selinux-policy-dev samba lshw openjdk-17-jdk tomcat9 -y
+apt-get install openssl xvfb cifs-utils krb5-user ldap-utils ldap-utils libsasl2-modules-gssapi-mit snmp selinux-policy-dev samba lshw openjdk-17-jdk tomcat9 libxkbcommon-x11-0 libgbm-dev-y
 echo 
 echo
 echo "##### MYSQL Database Install and configuration#####"
@@ -158,7 +158,7 @@ echo
 ./eset-bridge.x86_64.bin -y
 echo 
 echo 
-./rdsensor-linux-x86_64.sh -y
+./rdsensor-linux-x86_64.sh --skip-license
 echo
 echo 
 systemctl status tomcat9
@@ -169,7 +169,10 @@ echo
 echo
 systemctl restart tomcat9
 echo
-echo 
+echo
+echo "jeda 1 menit untuk instalasi agent"
+sleep 1m
+echo "agent deploy"
 ./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password='RunIF@!123!' --cert-auto-confirm --enable-imp-program
 echo
 echo 

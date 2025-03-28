@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export LC_ALL="en_US.UTF-8"
 echo "##### Download Pakage Installer ESET PROTECT ####"
 echo ### Download Installer EP dan Part lainnya ###
 echo "###################checkfile era war req data#####################"

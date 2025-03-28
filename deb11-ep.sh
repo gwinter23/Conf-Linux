@@ -171,13 +171,13 @@ echo
 cp era.war /var/lib/tomcat9/webapps/
 echo 
 echo
-systemctl restart tomcat9
+systemctl restart tomcat9 --quiet
 echo
 echo
 echo "jeda 1 menit untuk instalasi agent"
 sleep 1m
 echo "agent deploy"
-./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password='RunIF@!123!' --cert-auto-confirm --enable-imp-program
+echo ./agent-linux-x86_64.sh --skip-license --hostname=localhost --port=2222 --webconsole-hostname=localhost --webconsole-port=2223 --webconsole-user=administrator --webconsole-password='RunIF@!123!' --cert-auto-confirm --enable-imp-program
 echo
 echo 
 apt-get install libxkbcommon-x11-0 libgbm-dev -y 

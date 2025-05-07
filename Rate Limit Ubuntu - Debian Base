@@ -1,0 +1,41 @@
+#check limit
+ulimit -n
+
+#check all limit
+ulimit -a 
+
+#check sof and hard limit
+ulimit -Sn
+ulimit -Hn
+
+# increase the limit 
+nano /etc/security/limits.conf
+
+###### End of file
+* soft nproc 65535
+* hard nproc 65535
+* soft nofile 65535
+* hard nofile 65535
+root soft nproc 100000
+root hard nproc 100000
+root soft nofile 100000
+root hard nofile 100000
+###############################33
+
+
+nano /etc/pam.d/common-session
+#input this 
+session required pam_limits.so
+
+
+nano /etc/sysctl.conf
+#input this
+fs.file-max = 2097152
+
+#checking systemd
+ls /usr/lib/systemd/system/ | grep era
+ls /etc/systemd/system/ | grep era
+
+nano /etc/systemd/system/eraserver.service
+#input this value 
+LimitNOFILE=65535

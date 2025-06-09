@@ -1,0 +1,62 @@
+#!/bin/sh
+
+apt update & apt upgrade
+
+apt install openjdk-17-jdk
+
+useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.105/bin/apache-tomcat-9.0.105.tar.gz
+
+tar xzvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
+
+chown -R tomcat:tomcat /opt/tomcat
+
+find /usr/ -name *jdk
+
+## check home directory java or jdk###
+/usr/share/doc/openjdk-17-jdk
+
+nano /etc/systemd/system/tomcat9.service
+
+insert 
+
+        [Unit]
+        Description=Tomcat Server
+        After=network.target
+
+        [Service]
+        Type=forking
+        User=tomcat
+        Group=tomcat
+        Environment="JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64"
+        WorkingDirectory=/opt/tomcat/
+
+        ExecStart=/opt/tomcat/bin/startup.sh
+        ExecStop=/opt/tomcat/bin/shutdown.sh
+
+        [Install]
+        WantedBy=multi-user.target
+
+Save 
+
+systemctl daemon-reload
+
+systemctl start tomcat9
+
+systemctl status tomcat9
+
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+
+cp era.war /opt/tomcat/webapps/
+
+systemctl stop tomcat9
+
+systemctl start tomcat9
+
+
+### Check access tomcat with http:ip-address:8080/era###
+
+######################################################
+###########Tested ubuntu 24.04.2 LTS##################
+######################################################

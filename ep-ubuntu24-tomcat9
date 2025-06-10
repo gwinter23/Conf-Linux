@@ -1,0 +1,158 @@
+#!/bin/sh
+
+####################################
+### Tomcat Webapps Implementation### 
+apt update & apt upgrade
+
+apt install openjdk-17-jdk
+
+useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.105/bin/apache-tomcat-9.0.105.tar.gz
+
+tar xzvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
+
+chown -R tomcat:tomcat /opt/tomcat
+
+find /usr/ -name *jdk
+
+## check home directory java or jdk###
+/usr/share/doc/openjdk-17-jdk
+
+nano /etc/systemd/system/tomcat9.service
+
+insert 
+
+        [Unit]
+        Description=Tomcat Server
+        After=network.target
+
+        [Service]
+        Type=forking
+        User=tomcat
+        Group=tomcat
+        Environment="JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64"
+        WorkingDirectory=/opt/tomcat/
+
+        ExecStart=/opt/tomcat/bin/startup.sh
+        ExecStop=/opt/tomcat/bin/shutdown.sh
+
+        [Install]
+        WantedBy=multi-user.target
+
+Save 
+
+systemctl daemon-reload
+
+systemctl start tomcat9
+
+systemctl status tomcat9
+
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+
+cp era.war /opt/tomcat/webapps/
+
+systemctl stop tomcat9
+
+systemctl start tomcat9
+
+
+### Check access tomcat with http:ip-address:8080/era###
+###############################
+### Done tomcat and webapps ###
+###############################
+
+
+###################################
+### ESET PROTECT + Depedencies ####
+
+wget https://cdn.mysql.com/archives/mysql-connector-odbc-9.2/mysql-connector-odbc-9.2.0-linux-glibc2.28-x86-64bit.tar.gz
+
+wget https://repo.mysql.com//mysql-apt-config_0.8.34-1_all.deb
+
+dpkg -i mysql-apt-config_0.8.34-1_all.deb
+
+add-apt-repository ppa:rock-core/qt4
+
+apt update -y
+apt upgrade -y
+
+apt install -y wget lshw unixodbc libodbc2 xvfb cifs-utils krb5-user winbind ldap-utils snmp ldap-utils libsasl2-modules-gssapi-mit selinux-policy-dev libqt5webkit5
+
+##Mysql Install Pakage and Configure##
+
+apt-get install mysql-community-server
+(choose 8.4.x mysql version)
+
+mysql -u root -p
+(Check Login Database )
+
+nano /etc/mysql/mysql.conf.d/mysqld.cnf
+
+Insert 
+
+            ####################################
+            # ESET Requirement
+            max_allowed_packet = 500M
+            log_bin_trust_function_creators=1
+            innodb_log_file_size = 200M
+            innodb_log_files_in_group = 4
+            innodb_lock_wait_timeout=600
+            ####################################
+        
+Save Exit Nano
+
+systemctl restart mysql
+
+mysql -u root -p
+(check again login to database)
+
+##ODBC Install##
+
+apt-get install odbcinst
+
+odbcinst -j
+(check odbc status path config)
+
+tar xvzf mysql-connector-odbc-9.2.0-linux-glibc2.28-x86-64bit.tar.gz
+
+cp mysql-connector-odbc-9.2.0-linux-glibc2.28-x86-64bit/lib/libmyodbc9* /usr/lib/x86_64-linux-gnu/
+
+ls -lsb /usr/lib/x86_64-linux-gnu/ | grep libmyodbc9*
+(check file libmyodbc9)
+
+nano /etc/odbcinst.ini
+
+insert
+
+        [MySQL ODBC 9.2]
+        Driver=/usr/lib/x86_64-linux-gnu/libmyodbc9w.so
+        #SETUP=/usr/lib/x86_64-linux-gnu/libmyodbc9S.so
+        UsageCount=1
+
+Save Exit Nano
+
+odbcinst -q -d
+(check Name DSN ODBC Config)
+
+## Install Services##
+
+wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server-linux-x86_64.sh
+wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
+wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
+
+./server-linux-x86_64.sh --skip-license --db-driver="MySQL ODBC 9.2" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=Webadmin123 --server-root-password=Webadmin123 --db-user-username=root --db-user-password=Webadmin123 --cert-hostname="*" --enable-imp-program
+
+For Agent install, copy script agent and running on you console, with chmod +x 
+
+chmod +x eset-bridge.x86_64.bin
+./eset-bridge.x86_64.bin -y
+
+chmod +x rdsensor-linux-x86_64.sh
+./rdsensor-linux-x86_64.sh
+
+
+######################################################
+###########Tested ubuntu 24.04.2 LTS##################
+######################################################
+

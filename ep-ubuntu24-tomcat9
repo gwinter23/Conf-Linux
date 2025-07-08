@@ -139,7 +139,7 @@ odbcinst -q -d
 
 wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server-linux-x86_64.sh
 wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
-wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
+wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor-linux-x86_64.sh
 
 ./server-linux-x86_64.sh --skip-license --db-driver="MySQL ODBC 9.2" --db-hostname=127.0.0.1 --db-port=3306 --db-admin-username=root --db-admin-password=Webadmin123 --server-root-password=Webadmin123 --db-user-username=root --db-user-password=Webadmin123 --cert-hostname="*" --enable-imp-program
 

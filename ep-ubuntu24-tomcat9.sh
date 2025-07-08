@@ -70,7 +70,7 @@ echo -e "${GREEN}Detected JAVA_HOME: ${JAVA_HOME}${NC}"
 
 
 echo -e "${GREEN}Creating tomcat9.service systemd file...${NC}"
-cat <<EOF > /etc/systemd/system/tomcat9.service
+cat <<EOF >> /etc/systemd/system/tomcat9.service
 [Unit]
 Description=Tomcat Server
 After=network.target

@@ -6,6 +6,14 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
+# --- DEFINISI PASSWORD (EDIT SESUAI KEBUTUHAN ANDA) ---
+# CATATAN: Sangat disarankan untuk mengubah password ini setelah instalasi berhasil untuk keamanan.
+MYSQL_ROOT_PASSWORD="Webadmin123" # Ganti dengan password MySQL root Anda
+ESET_SERVER_ROOT_PASSWORD="Webadmin@2025ber"      # Ganti dengan password root ESET PROTECT Anda (jika berbeda)
+
+# --- DEFINISI URL UNDUHAN (EDIT JIKA VERSI ATAU ALAMAT BERUBAH) ---
+TOMCAT_DOWNLOAD_URL="https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.107/bin/apache-tomcat-9.0.107.tar.gz"
+
 echo -e "${YELLOW}Starting ESET PROTECT and Tomcat Webapps installation script.${NC}"
 echo -e "${YELLOW}This script requires root privileges. Please run with 'sudo bash install_eset.sh'.${NC}"
 echo -e "${YELLOW}Ensure you have an active internet connection.${NC}"
@@ -36,13 +44,16 @@ echo -e "${GREEN}Creating 'tomcat' user...${NC}"
 useradd -m -U -d /opt/tomcat -s /bin/false tomcat
 check_success "tomcat user creation"
 
-echo -e "${GREEN}Downloading Apache Tomcat 9...${NC}"
-wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.107/bin/apache-tomcat-9.0.107.tar.gz -P /tmp/
+echo -e "${GREEN}Downloading Apache Tomcat 9 from ${TOMCAT_DOWNLOAD_URL}...${NC}"
+wget "${TOMCAT_DOWNLOAD_URL}" -P /tmp/
 check_success "Tomcat download"
 
 echo -e "${GREEN}Extracting Tomcat to /opt/tomcat...${NC}"
-mkdir -p /opt/tomcat
-tar xzvf /tmp/apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
+# Nama file di sini harus diekstrak dari URL, atau jika Anda tahu polanya
+# Anda bisa menggunakan wildcard seperti apache-tomcat-9*tar.gz
+# Untuk kejelasan, kita bisa ekstrak nama file dari URL
+TOMCAT_FILENAME=$(basename "${TOMCAT_DOWNLOAD_URL}")
+tar xzvf "/tmp/${TOMCAT_FILENAME}" -C /opt/tomcat --strip-components=1
 check_success "Tomcat extraction"
 
 echo -e "${GREEN}Setting ownership for /opt/tomcat...${NC}"
@@ -135,12 +146,12 @@ apt install -y wget lshw unixodbc libodbc2 xvfb cifs-utils krb5-user winbind lda
 check_success "ESET PROTECT dependencies installation"
 
 echo -e "${GREEN}Installing MySQL Community Server...${NC}"
+# Perintah instalasi MySQL Community Server akan meminta password root baru.
+# Gunakan 'debconf-set-selections' untuk pre-seed password.
+echo "mysql-community-server mysql-community-server/root-pass password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
+echo "mysql-community-server mysql-community-server/re-root-pass password ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
 apt-get install mysql-community-server -y
 check_success "MySQL Community Server installation"
-
-echo -e "${YELLOW}Please log in to MySQL as root to verify installation.${NC}"
-echo -e "${YELLOW}Run: mysql -u root -p (then enter your MySQL root password if prompted by installer).${NC}"
-read -p "Press Enter to continue after checking MySQL login..."
 
 echo -e "${GREEN}Configuring MySQL settings for ESET requirements...${NC}"
 # Membuat backup file config asli
@@ -162,9 +173,10 @@ echo -e "${GREEN}Restarting MySQL service...${NC}"
 systemctl restart mysql
 check_success "MySQL service restart"
 
-echo -e "${YELLOW}Please log in to MySQL again to verify restart.${NC}"
-echo -e "${YELLOW}Run: mysql -u root -p (then enter your MySQL root password).${NC}"
-read -p "Press Enter to continue after checking MySQL login..."
+# Otomatisasi pengecekan login MySQL (opsional, karena password sudah di-set)
+echo -e "${GREEN}Verifying MySQL root login...${NC}"
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" -e "SELECT User, Host FROM mysql.user;" > /dev/null 2>&1
+check_success "MySQL root login verification"
 
 echo -e "${GREEN}Installing ODBC utilities...${NC}"
 apt-get install odbcinst -y
@@ -225,10 +237,10 @@ echo -e "${GREEN}Running ESET PROTECT Server installer (this may take some time)
     --db-hostname=127.0.0.1 \
     --db-port=3306 \
     --db-admin-username=root \
-    --db-admin-password=Webadmin123 \
-    --server-root-password=Webadmin@2025ber \
+    --db-admin-password="${MYSQL_ROOT_PASSWORD}" \
+    --server-root-password="${ESET_SERVER_ROOT_PASSWORD}" \
     --db-user-username=root \
-    --db-user-password=Webadmin123 \
+    --db-user-password="${MYSQL_ROOT_PASSWORD}" \
     --cert-hostname="*" \
     --enable-imp-program
 check_success "ESET PROTECT Server installation"

@@ -100,7 +100,7 @@ echo "###################checkfile era war req data#####################"
     then
         echo "$eb has found."
     else
-        wget wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
+        wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin
     fi
     echo
     echo

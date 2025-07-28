@@ -1,3 +1,31 @@
+#!/bin/bash
+
+# Ambil ID OS dari /etc/os-release
+OS_ID=$(grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
+
+echo "Detected OS: $OS_ID"
+
+# Kondisional berdasarkan OS
+case "$OS_ID" in
+  ubuntu)
+    echo "Menjalankan perintah untuk Ubuntu"
+    apt install fio -y
+    ;;
+  debian)
+    echo "Menjalankan perintah untuk Debian"
+    apt install fio -y
+    ;;
+  centos|rhel|rocky)
+    echo "Menjalankan perintah untuk CentOS/RHEL"
+    yum install fio -y
+    ;;
+  *)
+    echo "OS tidak dikenal. Silakan periksa manual."
+    exit 1
+    ;;
+esac
+
+
 mkdir /root/diskiops/
 
 fio --name=test-iops \

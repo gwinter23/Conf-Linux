@@ -37,10 +37,8 @@ fio --name=test-iops \
     --runtime=600 \
     --time_based \
     --ioengine=libaio \
-
-rm -rf /root/diskiops/testfile.iops
-
-
     --direct=1 \
     --numjobs=4 \
     --group_reporting
+
+rm -rf /root/diskiops/testfile.iops

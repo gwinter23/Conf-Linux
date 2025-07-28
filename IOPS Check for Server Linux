@@ -1,0 +1,14 @@
+mkdir /root/diskiops/
+
+fio --name=test-iops \
+    --size=10G \
+    --filename=/root/diskiops/testfile.iops \
+    --bs=4k \
+    --rw=randrw \
+    --rwmixwrite=50 \
+    --runtime=600 \
+    --time_based \
+    --ioengine=libaio \
+    --direct=1 \
+    --numjobs=4 \
+    --group_reporting

@@ -28,3 +28,20 @@ tmpdir = /path/to/fast/disk
 Check Query Process Database : 
 
 SHOW ENGINE INNODB STATUS\G
+
+---------------------------------------------
+
+Check size Database : 
+
+SELECT 
+    table_schema AS database_name,
+    ROUND(SUM(data_length) / 1024 / 1024, 2) AS total_data_mb,
+    ROUND(SUM(index_length) / 1024 / 1024, 2) AS total_index_mb,
+    ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS total_size_mb
+FROM information_schema.tables
+WHERE table_schema = 'nama_database_kamu'
+GROUP BY table_schema;
+
+---------------------------------------------
+
+

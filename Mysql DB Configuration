@@ -1,0 +1,25 @@
+MYSQL Remote : 
+
+mysql> CREATE USER 'remote'@'%' IDENTIFIED BY 'webadmin123';
+Query OK, 0 rows affected (0.90 sec)
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO 'remote'@'%' WITH GRANT OPTION;
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> FLUSH PRIVILEGES; 
+Query OK, 0 rows affected (0.13 sec)
+
+
+
+Mysql Configuration Tweak. 
+
+[mysqld]
+innodb_buffer_pool_size = 8G
+innodb_log_file_size = 512M
+max_connections = 250
+innodb_thread_concurrency = 8
+innodb_flush_log_at_trx_commit = 2
+table_open_cache = 4000
+table_definition_cache = 2000
+general_log = 0
+tmpdir = /path/to/fast/disk

@@ -1,8 +1,0 @@
-mysql> CREATE USER 'remote'@'%' IDENTIFIED BY 'webadmin123';
-Query OK, 0 rows affected (0.90 sec)
-
-mysql> GRANT ALL PRIVILEGES ON *.* TO 'remote'@'%' WITH GRANT OPTION;
-Query OK, 0 rows affected (0.21 sec)
-
-mysql> FLUSH PRIVILEGES; 
-Query OK, 0 rows affected (0.13 sec)

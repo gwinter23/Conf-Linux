@@ -9,7 +9,7 @@ Query OK, 0 rows affected (0.21 sec)
 mysql> FLUSH PRIVILEGES; 
 Query OK, 0 rows affected (0.13 sec)
 
-
+------------------------------------------------
 
 Mysql Configuration Tweak. 
 
@@ -23,3 +23,8 @@ table_open_cache = 4000
 table_definition_cache = 2000
 general_log = 0
 tmpdir = /path/to/fast/disk
+
+---------------------------------------------
+Check Query Process Database : 
+
+SHOW ENGINE INNODB STATUS\G

@@ -1,0 +1,14 @@
+1. Installation VirtIO Driver On VM Windows
+
+2. Set VM with 
+Cache : Yes
+IO Thread : Writeback
+Async IO : IO_thread
+Disk : SCSI or Virtio
+SCSI Controler : Virtio
+
+3. Duble Socket Core (if using dual processor socket)
+
+4. Unlimited Using Drive Performance Bandwith. 
+
+

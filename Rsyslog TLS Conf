@@ -23,3 +23,25 @@ type="imtcp"
 port="6514"
 )
 
+
+###
+Apparmor check if blocked :
+###
+nano /etc/apparmor.d/usr.sbin.rsyslogd
+
+berfore } input :
+
+  /etc/rsyslog-ssl/*.pem r,
+
+##
+Permission
+##
+
+mkdir /etc/rsyslog-ssl
+
+chown root:syslog /etc/rsyslog-ssl
+chmod 750 /etc/rsyslog-ssl
+
+chown root:syslog /etc/rsyslog-ssl/*.pem
+chmod 640 /etc/rsyslog-ssl/*.pem
+

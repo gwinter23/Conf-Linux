@@ -1,3 +1,6 @@
+#######
+Configuration .conf syslog
+#######
 
 nano /etc/rsyslog.d/syslog1-syslog.conf 
 
@@ -23,10 +26,33 @@ type="imtcp"
 port="6514"
 )
 
+#######
+Input data configuration for TLS Communication
+#######
 
-###
+
+# Template untuk menyimpan log berdasarkan nama host pengirim
+template(name="RemoteLogs" type="string" string="/var/log/remote/%HOSTNAME%/syslog.log")
+
+# Action: jika log berasal dari remote (bukan localhost)
+if ($fromhost-ip != "51.136.106.164, 51.136.106.165, 51.136.106.166, 51.136.106.167, 20.16.120.5") then {
+  action(
+    type="omfile"
+    dynaFile="RemoteLogs"
+    createDirs="on"
+    dirCreateMode="0750"
+    fileCreateMode="0640"
+  )
+}
+
+/etc/rsyslog.d/60-remote-logs.conf
+
+
+
+
+#######
 Apparmor check if blocked :
-###
+#######
 
 nano /etc/apparmor.d/usr.sbin.rsyslogd
 
@@ -34,9 +60,9 @@ berfore } input :
 
   /etc/rsyslog-ssl/*.pem r,
 
-##
+######
 Permission
-##
+######
 
 mkdir /etc/rsyslog-ssl
 
@@ -46,15 +72,15 @@ chmod 750 /etc/rsyslog-ssl
 chown root:syslog /etc/rsyslog-ssl/*.pem
 chmod 640 /etc/rsyslog-ssl/*.pem
 
-###
+#######
 Pakage 
-###
+#######
 apt install rsyslog-gnutls
 
 
-###
+#########
 Start Rsyslog and monitoring
-###
+#########
 
 systemctl status rsyslog 
 systemctl stop rsyslog

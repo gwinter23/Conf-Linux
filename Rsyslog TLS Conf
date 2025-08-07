@@ -46,3 +46,20 @@ chmod 750 /etc/rsyslog-ssl
 chown root:syslog /etc/rsyslog-ssl/*.pem
 chmod 640 /etc/rsyslog-ssl/*.pem
 
+###
+Pakage 
+###
+apt install rsyslog-gnutls
+
+
+###
+Start Rsyslog and monitoring
+###
+
+systemctl status rsyslog 
+systemctl stop rsyslog
+systemctl start rsyslog
+
+systemctl restart rsyslog 
+
+If any error you can check on log syslog default : /var/log/syslog

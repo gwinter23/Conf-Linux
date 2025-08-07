@@ -27,6 +27,7 @@ port="6514"
 ###
 Apparmor check if blocked :
 ###
+
 nano /etc/apparmor.d/usr.sbin.rsyslogd
 
 berfore } input :

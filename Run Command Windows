@@ -1,0 +1,27 @@
+Command Windows : 
+
+#### Change User Password Windows : 
+
+Set-LocalUser -Name "you-user" -Password (ConvertTo-SecureString "password-user" -AsPlainText -Force)
+
+net user nama-user password-user
+
+
+#### Silent Download :
+
+powershell.exe -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://download.sysinternals.com/files/ProcessMonitor.zip' -OutFile 'C:\ProcessMonitor.zip'"
+
+
+#### Change Policy Windows Blocked Allow .msi :
+
+reg add "HKLM\Software\Policies\Microsoft\Windows\Installer" /v DisableMSI /t REG_DWORD /d 2 /f
+
+Allow Again
+
+reg add "HKLM\Software\Policies\Microsoft\Windows\Installer" /v DisableMSI /t REG_DWORD /d 0 /f
+
+
+#### Clear Cache Browser, Chrome, Edge, Firefox :
+
+powershell.exe -ExecutionPolicy Bypass -Command "Stop-Process -Name chrome,msedge,firefox -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Local\Google\Chrome\User Data\Default\History' -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Local\Google\Chrome\User Data\Default\Cache' -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\History' -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Local\Microsoft\Edge\User Data\Default\Cache' -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Roaming\Mozilla\Firefox\Profiles\*\places.sqlite' -Force -ErrorAction SilentlyContinue; Remove-Item 'C:\Users\*\AppData\Roaming\Mozilla\Firefox\Profiles\*\cache2\entries' -Recurse -Force -ErrorAction SilentlyContinue"
+

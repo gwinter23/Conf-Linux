@@ -127,13 +127,13 @@ echo -e "${YELLOW}--- Starting ESET PROTECT + Dependencies Installation ---${NC}
 
 echo -e "${GREEN}Downloading MySQL Connector ODBC and MySQL APT Config...${NC}"
 wget https://cdn.mysql.com/archives/mysql-connector-odbc-9.2/mysql-connector-odbc-9.2.0-linux-glibc2.28-x86-64bit.tar.gz -P /tmp/
-#check_success "MySQL Connector ODBC download"
-#wget https://repo.mysql.com//mysql-apt-config_0.8.34-1_all.deb -P /tmp/
-#check_success "MySQL APT Config download"
+check_success "MySQL Connector ODBC download"
+wget https://repo.mysql.com//mysql-apt-config_0.8.36-1_all.deb -P /tmp/
+check_success "MySQL APT Config download"
 
-#echo -e "${GREEN}Installing MySQL APT Config (you will be prompted to choose MySQL version, select 8.4.x)...${NC}"
-#dpkg -i /tmp/mysql-apt-config_0.8.34-1_all.deb
-#check_success "MySQL APT Config installation"
+echo -e "${GREEN}Installing MySQL APT Config (you will be prompted to choose MySQL version, select 8.4.x)...${NC}"
+dpkg -i /tmp/mysql-apt-config_0.8.36-1_all.deb
+check_success "MySQL APT Config installation"
 
 echo -e "${GREEN}Adding PPA for Qt4 dependencies...${NC}"
 add-apt-repository ppa:rock-core/qt4 -y

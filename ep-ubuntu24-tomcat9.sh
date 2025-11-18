@@ -14,7 +14,7 @@ MYSQL_ROOT_PASSWORD="Webadmin123" # Ganti dengan password MySQL root Anda
 ESET_SERVER_ROOT_PASSWORD="Webadmin@2025ber"      # Ganti dengan password root ESET PROTECT Anda (jika berbeda)
 
 # --- DEFINISI URL UNDUHAN (EDIT JIKA VERSI ATAU ALAMAT BERUBAH) ---
-TOMCAT_DOWNLOAD_URL="https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.107/bin/apache-tomcat-9.0.107.tar.gz"
+TOMCAT_DOWNLOAD_URL="https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.112/bin/apache-tomcat-9.0.112.tar.gz"
 
 echo -e "${YELLOW}Starting ESET PROTECT and Tomcat Webapps installation script.${NC}"
 echo -e "${YELLOW}This script requires root privileges. Please run with 'sudo bash install_eset.sh'.${NC}"
@@ -105,11 +105,11 @@ systemctl status tomcat9 --no-pager
 echo ""
 
 echo -e "${GREEN}Downloading ESET ERA WAR file...${NC}"
-wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war -P /tmp/
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era_x64.war -P /tmp/
 check_success "ERA WAR download"
 
 echo -e "${GREEN}Copying era.war to Tomcat webapps directory...${NC}"
-cp /tmp/era.war /opt/tomcat/webapps/
+cp /tmp/era_x64.war /opt/tomcat/webapps/
 check_success "Copying era.war"
 
 echo -e "${GREEN}Stopping and restarting Tomcat9 service for ERA deployment...${NC}"
@@ -219,7 +219,7 @@ odbcinst -q -d
 echo ""
 
 echo -e "${GREEN}Downloading ESET PROTECT Server, Bridge, and RDSensor installers...${NC}"
-wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server-linux-x86_64.sh -P /tmp/
+wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server_linux_x86_64.sh -P /tmp/
 check_success "ESET PROTECT Server download"
 wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin -P /tmp/
 check_success "ESET Bridge download"

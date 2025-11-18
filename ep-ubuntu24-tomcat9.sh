@@ -1,12 +1,14 @@
 #!/bin/bash
-
+##### RAM BASH SCRIPT Build Resposibility USE########
 # --- Warna untuk output konsol ---
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# --- DEFINISI PASSWORD (EDIT SESUAI KEBUTUHAN ANDA) ---
+# --- DEFINISI PASSWORD (EDIT SESUAI KEBUTUHAN ANDA) --- 
+# ----DEFINISIKAN PASSWORD dengan baik, pada ESET PROTECT versi 12.1 membutuhkan kombinasi Password Lengkap 
+# ----Script TIDAK INCLUDE DENGAN SSL CONF SSL Self Sign atau Public SSL di Insert Manual Sesuai kebutuhan.
 # CATATAN: Sangat disarankan untuk mengubah password ini setelah instalasi berhasil untuk keamanan.
 MYSQL_ROOT_PASSWORD="Webadmin123" # Ganti dengan password MySQL root Anda
 ESET_SERVER_ROOT_PASSWORD="Webadmin@2025ber"      # Ganti dengan password root ESET PROTECT Anda (jika berbeda)

@@ -259,5 +259,5 @@ check_success "RDSensor installation"
 
 echo -e "${YELLOW}--- ESET PROTECT + Dependencies installation completed ---${NC}"
 echo -e "${GREEN}All installations completed successfully!${NC}"
-echo -e "${YELLOW}Tested on Ubuntu 24.04.2 LTS.${NC}"
+echo -e "${YELLOW}Tested on Ubuntu 24.04.2, 24.04.3 LTS.${NC}"
 echo ""

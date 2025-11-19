@@ -123,9 +123,9 @@ cp /tmp/era_x64.war /opt/tomcat/webapps/
 check_success "Copying era.war"
 
 echo -e "${GREEN}Making installers executable...${NC}"
-chmod +x /tmp/server-linux-x86_64.sh
+chmod +x /tmp/server_linux_x86_64.sh
 chmod +x /tmp/eset-bridge.x86_64.bin
-chmod +x /tmp/rdsensor-linux-x86_64.sh
+chmod +x /tmp/rdsensor_linux_x86_64.sh
 check_success "Making installers executable"
 
 echo -e "${GREEN}Stopping and restarting Tomcat9 service for ERA deployment...${NC}"

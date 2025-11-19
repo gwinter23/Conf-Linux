@@ -108,9 +108,25 @@ echo -e "${GREEN}Downloading ESET ERA WAR file...${NC}"
 wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era_x64.war -P /tmp/
 check_success "ERA WAR download"
 
+echo -e "${GREEN}Downloading ESET PROTECT Server, Bridge, and RDSensor installers...${NC}"
+wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server_linux_x86_64.sh -P /tmp/
+check_success "ESET PROTECT Server download"
+
+wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin -P /tmp/
+check_success "ESET Bridge download"
+
+wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor_linux_x86_64.sh -P /tmp/
+check_success "RDSensor download"
+
 echo -e "${GREEN}Copying era.war to Tomcat webapps directory...${NC}"
 cp /tmp/era_x64.war /opt/tomcat/webapps/
 check_success "Copying era.war"
+
+echo -e "${GREEN}Making installers executable...${NC}"
+chmod +x /tmp/server-linux-x86_64.sh
+chmod +x /tmp/eset-bridge.x86_64.bin
+chmod +x /tmp/rdsensor-linux-x86_64.sh
+check_success "Making installers executable"
 
 echo -e "${GREEN}Stopping and restarting Tomcat9 service for ERA deployment...${NC}"
 systemctl stop tomcat9
@@ -217,20 +233,6 @@ check_success "odbcinst.ini configuration"
 echo -e "${GREEN}Checking Name DSN ODBC Config...${NC}"
 odbcinst -q -d
 echo ""
-
-echo -e "${GREEN}Downloading ESET PROTECT Server, Bridge, and RDSensor installers...${NC}"
-wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/server_linux_x86_64.sh -P /tmp/
-check_success "ESET PROTECT Server download"
-wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin -P /tmp/
-check_success "ESET Bridge download"
-wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor_linux_x86_64.sh -P /tmp/
-check_success "RDSensor download"
-
-echo -e "${GREEN}Making installers executable...${NC}"
-chmod +x /tmp/server-linux-x86_64.sh
-chmod +x /tmp/eset-bridge.x86_64.bin
-chmod +x /tmp/rdsensor-linux-x86_64.sh
-check_success "Making installers executable"
 
 echo -e "${GREEN}Running ESET PROTECT Server installer (this may take some time)...${NC}"
 /tmp/server-linux-x86_64.sh \

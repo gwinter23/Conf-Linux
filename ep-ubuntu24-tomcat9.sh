@@ -223,7 +223,7 @@ wget https://download.eset.com/com/eset/apps/business/era/server/linux/latest/se
 check_success "ESET PROTECT Server download"
 wget https://download.eset.com/com/eset/apps/business/ech/latest/eset-bridge.x86_64.bin -P /tmp/
 check_success "ESET Bridge download"
-wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor-linux-x86_64.sh -P /tmp/
+wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsensor_linux_x86_64.sh -P /tmp/
 check_success "RDSensor download"
 
 echo -e "${GREEN}Making installers executable...${NC}"

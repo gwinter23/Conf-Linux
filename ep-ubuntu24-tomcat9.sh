@@ -105,7 +105,7 @@ systemctl status tomcat9 --no-pager
 echo ""
 
 echo -e "${GREEN}Downloading ESET ERA WAR file...${NC}"
-wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era_x64.war -P /tmp/
+wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era_x64.war -O /tmp/era.war
 check_success "ERA WAR download"
 
 echo -e "${GREEN}Downloading ESET PROTECT Server, Bridge, and RDSensor installers...${NC}"
@@ -119,7 +119,7 @@ wget https://download.eset.com/com/eset/apps/business/era/rdsensor/latest/rdsens
 check_success "RDSensor download"
 
 echo -e "${GREEN}Copying era.war to Tomcat webapps directory...${NC}"
-cp /tmp/era_x64.war /opt/tomcat/webapps/
+cp /tmp/era.war /opt/tomcat/webapps/
 check_success "Copying era.war"
 
 echo -e "${GREEN}Making installers executable...${NC}"

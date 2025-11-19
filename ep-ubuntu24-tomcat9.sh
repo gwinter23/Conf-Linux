@@ -235,7 +235,7 @@ odbcinst -q -d
 echo ""
 
 echo -e "${GREEN}Running ESET PROTECT Server installer (this may take some time)...${NC}"
-/tmp/server-linux-x86_64.sh \
+/tmp/server_linux_x86_64.sh \
     --skip-license \
     --db-driver="MySQL ODBC 9.2" \
     --db-hostname=127.0.0.1 \
@@ -254,7 +254,7 @@ echo -e "${GREEN}Running ESET Bridge installer...${NC}"
 check_success "ESET Bridge installation"
 
 echo -e "${GREEN}Running RDSensor installer...${NC}"
-/tmp/rdsensor-linux-x86_64.sh
+/tmp/rdsensor_linux_x86_64.sh
 check_success "RDSensor installation"
 
 echo -e "${YELLOW}--- ESET PROTECT + Dependencies installation completed ---${NC}"

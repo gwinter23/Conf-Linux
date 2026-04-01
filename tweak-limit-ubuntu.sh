@@ -77,33 +77,10 @@ LIMITS
   sed -i 's/#DefaultLimitNOFILE=/DefaultLimitNOFILE=1048576/' /etc/systemd/system.conf
 }
 
-layer_service() {
-  echo "[*] Layer 4 — systemd EsetBridge override..."
-  mkdir -p /etc/systemd/system/EsetBridge.service.d/
-  cat > /etc/systemd/system/EsetBridge.service.d/performance.conf << 'SVC'
-[Service]
-LimitNOFILE=1048576
-LimitNPROC=infinity
-Nice=-10
-Restart=on-failure
-RestartSec=2s
-SVC
-  systemctl daemon-reload
-  systemctl restart EsetBridge
-}
-
-layer_ufw() {
-  echo "[*] Layer 5 — UFW port..."
-  ufw allow 3128/tcp > /dev/null 2>&1 || true
-  ufw allow 3129/tcp > /dev/null 2>&1 || true
-}
-
 run_all() {
   layer_cpu
   layer_network
   layer_limits
-  layer_service
-  layer_ufw
 }
 
 # =========================
@@ -119,8 +96,6 @@ while true; do
   echo "2. CPU tuning"
   echo "3. Network tuning"
   echo "4. OS Limits tuning"
-  echo "5. EsetBridge tuning"
-  echo "6. UFW tuning"
   echo "7. Exit"
   echo "======================================"
   read -p "Pilih opsi [1-7]: " choice
@@ -130,8 +105,6 @@ while true; do
     2) layer_cpu ;;
     3) layer_network ;;
     4) layer_limits ;;
-    5) layer_service ;;
-    6) layer_ufw ;;
     7) exit 0 ;;
     *) echo "Pilihan tidak valid"; sleep 1 ;;
   esac

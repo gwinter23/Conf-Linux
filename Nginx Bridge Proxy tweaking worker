@@ -1,0 +1,27 @@
+Nginx / Bridge Proxy tweaking worker 
+
+
+# /var/opt/eset/bridge/nginx/conf/nginx.conf
+
+
+
+worker_processes auto;
+pid "/var/opt/eset/bridge/nginx/logs/nginx.pid";
+
+# Naikkan dari 32768 → 1048576
+# Harus >= worker_connections × 2 (karena setiap proxy conn butuh 2 FD)
+worker_rlimit_nofile 1048576;
+
+events {
+    worker_connections 65535;   # naikkan dari 32768 → 65535
+
+    multi_accept on;            # AKTIFKAN — ini yang paling berdampak
+                                # tanpa ini, 1 worker hanya terima 1 koneksi per event loop
+
+    use epoll;                  # tambahkan — Linux event model paling efisien
+                                # tanpa deklarasi eksplisit, Nginx pilih otomatis
+                                # tapi lebih baik dinyatakan tegas
+}
+
+# include nginx.conf.stream.server;   ← biarkan ter-comment, tidak perlu diaktifkan
+include nginx.conf.http.server;

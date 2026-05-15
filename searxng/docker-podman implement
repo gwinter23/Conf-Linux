@@ -1,0 +1,3 @@
+podman run -d -p 8888:8080 -v /home/podman/searxng/settings.yml:/etc/searxng/settings.yml --name searxng docker.io/searxng/searxng
+
+docker run -d -p 8888:8080 -v /home/podman/searxng/settings.yml:/etc/searxng/settings.yml --name searxng docker.io/searxng/searxng

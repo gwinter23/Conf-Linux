@@ -62,7 +62,8 @@ echo "###################checkfile era war req data#####################"
     then
         echo "$erawar has found."
     else
-        wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+#        wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era.war
+         wget https://download.eset.com/com/eset/apps/business/era/webconsole/latest/era_x64.war -O /tmp/era.war
     fi
 
     echo "###################checkfile era req data####################"

@@ -1,0 +1,28 @@
+Use Podman : 
+
+podman run -d \
+  --name docling-serve \
+  --restart=unless-stopped \
+  -p 5001:5001 \
+  -e DOCLING_SERVE_ENABLE_UI=true \
+  -e DOCLING_SERVE_MAX_SYNC_WAIT=600 \
+  -e DOCLING_SERVE_ENG_LOC_NUM_WORKERS=1 \
+  -e UVICORN_WORKERS=1 \
+  -e OMP_NUM_THREADS=16 \
+  -e MKL_NUM_THREADS=16 \
+  -e DOCLING_NUM_THREADS=16 \
+  quay.io/docling-project/docling-serve
+
+
+Testing docling : 
+
+curl -X POST \
+  "http://127.0.0.1:5001/v1/convert/file" \
+  -F "files=@document_with_image.pdf" \
+  -F "from_formats=pdf" \
+  -F "to_formats=md" \
+  -F "do_ocr=true" \
+  -F "force_ocr=false" \
+  -F "table_mode=accurate"
+
+  

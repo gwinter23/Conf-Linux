@@ -51,11 +51,11 @@ $esetTargets = @(
     @{Host="ca01.server.xdr.eset.systems"; Port=443; Service="XDR Agent Connection (Canada)"},
     
     # 8. ESET PROTECT File Upload Service - Azure Cloud (Port 444) (Table 22)
-    @{Host="epx-k8s-prod-eu-a.westeurope.cloudapp.azure.com"; Port=444; Service="File Upload (Europe)"},
-    @{Host="epx-k8s-prod-de-a.germanywestcentral.cloudapp.azure.com"; Port=444; Service="File Upload (Germany)"},
-    @{Host="epx-k8s-prod-jp-a.japaneast.cloudapp.azure.com"; Port=444; Service="File Upload (Japan)"},
-    @{Host="epx-k8s-prod-us-a.westus.cloudapp.azure.com"; Port=444; Service="File Upload (USA)"},
-    @{Host="epx-k8s-prod-ca-a.canadacentral.cloudapp.azure.com"; Port=444; Service="File Upload (Canada)"},
+    #@{Host="epx-k8s-prod-eu-a.westeurope.cloudapp.azure.com"; Port=444; Service="File Upload (Europe)"},
+    #@{Host="epx-k8s-prod-de-a.germanywestcentral.cloudapp.azure.com"; Port=444; Service="File Upload (Germany)"},
+    #@{Host="epx-k8s-prod-jp-a.japaneast.cloudapp.azure.com"; Port=444; Service="File Upload (Japan)"},
+    #@{Host="epx-k8s-prod-us-a.westus.cloudapp.azure.com"; Port=444; Service="File Upload (USA)"},
+    #@{Host="epx-k8s-prod-ca-a.canadacentral.cloudapp.azure.com"; Port=444; Service="File Upload (Canada)"},
     
     # 9. ESET PROTECT File Download Service (Table 22)
     @{Host="eu.download.protect.eset.com"; Port=443; Service="File Download (Europe)"},
@@ -98,6 +98,98 @@ $esetTargets = @(
     @{Host="jp01.agent.edr.eset.systems"; Port=8093; Service="EDR Agent Connection (Japan)"},
     @{Host="ca01.agent.edr.eset.systems"; Port=8093; Service="EDR Agent Connection (Canada)"},
     @{Host="de01.agent.edr.eset.systems"; Port=8093; Service="EDR Agent Connection (Germany)"}
+
+    # ====================================================================
+    # 12. TAMBAHAN TERBARU: ESET Connect Prerequisites (Port 443)
+    # ====================================================================
+    
+    # Europe
+    @{Host="eu.business-account.iam.eset.systems"; Port=443; Service="ESET Connect: Authentication (EU)"},
+    @{Host="eu.application-management.eset.systems"; Port=443; Service="ESET Connect: App Management (EU)"},
+    @{Host="eu.asset-management.eset.systems"; Port=443; Service="ESET Connect: Asset Management (EU)"},
+    @{Host="eu.automation.eset.systems"; Port=443; Service="ESET Connect: Automation (EU)"},
+    @{Host="eu.device-management.eset.systems"; Port=443; Service="ESET Connect: Device Management (EU)"},
+    @{Host="eu.iam.eset.systems"; Port=443; Service="ESET Connect: IAM (EU)"},
+    @{Host="eu.incident-management.eset.systems"; Port=443; Service="ESET Connect: Incident Management (EU)"},
+    @{Host="eu.installer-management.eset.systems"; Port=443; Service="ESET Connect: Installer Management (EU)"},
+    @{Host="eu.mobile-device-management.eset.systems"; Port=443; Service="ESET Connect: MDM (EU)"},
+    @{Host="eu.network-access-protection.eset.systems"; Port=443; Service="ESET Connect: NAP (EU)"},
+    @{Host="eu.patch-management.eset.systems"; Port=443; Service="ESET Connect: Patch Management (EU)"},
+    @{Host="eu.policy-management.eset.systems"; Port=443; Service="ESET Connect: Policy Management (EU)"},
+    @{Host="eu.quarantine-management.eset.systems"; Port=443; Service="ESET Connect: Quarantine Management (EU)"},
+    @{Host="eu.user-management.eset.systems"; Port=443; Service="ESET Connect: User Management (EU)"},
+    @{Host="eu.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (EU)"},
+    @{Host="eu.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (EU)"},
+
+    # Germany
+    @{Host="de.business-account.iam.eset.systems"; Port=443; Service="ESET Connect: Authentication (DE)"},
+    @{Host="de.application-management.eset.systems"; Port=443; Service="ESET Connect: App Management (DE)"},
+    @{Host="de.asset-management.eset.systems"; Port=443; Service="ESET Connect: Asset Management (DE)"},
+    @{Host="de.automation.eset.systems"; Port=443; Service="ESET Connect: Automation (DE)"},
+    @{Host="de.device-management.eset.systems"; Port=443; Service="ESET Connect: Device Management (DE)"},
+    @{Host="de.iam.eset.systems"; Port=443; Service="ESET Connect: IAM (DE)"},
+    @{Host="de.incident-management.eset.systems"; Port=443; Service="ESET Connect: Incident Management (DE)"},
+    @{Host="de.installer-management.eset.systems"; Port=443; Service="ESET Connect: Installer Management (DE)"},
+    @{Host="de.mobile-device-management.eset.systems"; Port=443; Service="ESET Connect: MDM (DE)"},
+    @{Host="de.network-access-protection.eset.systems"; Port=443; Service="ESET Connect: NAP (DE)"},
+    @{Host="de.patch-management.eset.systems"; Port=443; Service="ESET Connect: Patch Management (DE)"},
+    @{Host="de.policy-management.eset.systems"; Port=443; Service="ESET Connect: Policy Management (DE)"},
+    @{Host="de.quarantine-management.eset.systems"; Port=443; Service="ESET Connect: Quarantine Management (DE)"},
+    @{Host="de.user-management.eset.systems"; Port=443; Service="ESET Connect: User Management (DE)"},
+    @{Host="de.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (DE)"},
+    @{Host="de.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (DE)"},
+
+    # USA
+    @{Host="us.business-account.iam.eset.systems"; Port=443; Service="ESET Connect: Authentication (USA)"},
+    @{Host="us.application-management.eset.systems"; Port=443; Service="ESET Connect: App Management (USA)"},
+    @{Host="us.asset-management.eset.systems"; Port=443; Service="ESET Connect: Asset Management (USA)"},
+    @{Host="us.automation.eset.systems"; Port=443; Service="ESET Connect: Automation (USA)"},
+    @{Host="us.device-management.eset.systems"; Port=443; Service="ESET Connect: Device Management (USA)"},
+    @{Host="us.iam.eset.systems"; Port=443; Service="ESET Connect: IAM (USA)"},
+    @{Host="us.incident-management.eset.systems"; Port=443; Service="ESET Connect: Incident Management (USA)"},
+    @{Host="us.installer-management.eset.systems"; Port=443; Service="ESET Connect: Installer Management (USA)"},
+    @{Host="us.mobile-device-management.eset.systems"; Port=443; Service="ESET Connect: MDM (USA)"},
+    @{Host="us.network-access-protection.eset.systems"; Port=443; Service="ESET Connect: NAP (USA)"},
+    @{Host="us.patch-management.eset.systems"; Port=443; Service="ESET Connect: Patch Management (USA)"},
+    @{Host="us.policy-management.eset.systems"; Port=443; Service="ESET Connect: Policy Management (USA)"},
+    @{Host="us.quarantine-management.eset.systems"; Port=443; Service="ESET Connect: Quarantine Management (USA)"},
+    @{Host="us.user-management.eset.systems"; Port=443; Service="ESET Connect: User Management (USA)"},
+    @{Host="us.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (USA)"},
+    @{Host="us.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (USA)"},
+
+    # Japan
+    @{Host="jpn.business-account.iam.eset.systems"; Port=443; Service="ESET Connect: Authentication (JPN)"},
+    @{Host="jpn.application-management.eset.systems"; Port=443; Service="ESET Connect: App Management (JPN)"},
+    @{Host="jpn.asset-management.eset.systems"; Port=443; Service="ESET Connect: Asset Management (JPN)"},
+    @{Host="jpn.automation.eset.systems"; Port=443; Service="ESET Connect: Automation (JPN)"},
+    @{Host="jpn.device-management.eset.systems"; Port=443; Service="ESET Connect: Device Management (JPN)"},
+    @{Host="jpn.iam.eset.systems"; Port=443; Service="ESET Connect: IAM (JPN)"},
+    @{Host="jpn.incident-management.eset.systems"; Port=443; Service="ESET Connect: Incident Management (JPN)"},
+    @{Host="jpn.installer-management.eset.systems"; Port=443; Service="ESET Connect: Installer Management (JPN)"},
+    @{Host="jpn.mobile-device-management.eset.systems"; Port=443; Service="ESET Connect: MDM (JPN)"},
+    @{Host="jpn.network-access-protection.eset.systems"; Port=443; Service="ESET Connect: NAP (JPN)"},
+    @{Host="jpn.patch-management.eset.systems"; Port=443; Service="ESET Connect: Patch Management (JPN)"},
+    @{Host="jpn.policy-management.eset.systems"; Port=443; Service="ESET Connect: Policy Management (JPN)"},
+    @{Host="jpn.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (JPN)"},
+    @{Host="jpn.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (JPN)"},
+
+    # Canada
+    @{Host="ca.business-account.iam.eset.systems"; Port=443; Service="ESET Connect: Authentication (CA)"},
+    @{Host="ca.application-management.eset.systems"; Port=443; Service="ESET Connect: App Management (CA)"},
+    @{Host="ca.asset-management.eset.systems"; Port=443; Service="ESET Connect: Asset Management (CA)"},
+    @{Host="ca.automation.eset.systems"; Port=443; Service="ESET Connect: Automation (CA)"},
+    @{Host="ca.device-management.eset.systems"; Port=443; Service="ESET Connect: Device Management (CA)"},
+    @{Host="ca.iam.eset.systems"; Port=443; Service="ESET Connect: IAM (CA)"},
+    @{Host="ca.incident-management.eset.systems"; Port=443; Service="ESET Connect: Incident Management (CA)"},
+    @{Host="ca.installer-management.eset.systems"; Port=443; Service="ESET Connect: Installer Management (CA)"},
+    @{Host="ca.mobile-device-management.eset.systems"; Port=443; Service="ESET Connect: MDM (CA)"},
+    @{Host="ca.network-access-protection.eset.systems"; Port=443; Service="ESET Connect: NAP (CA)"},
+    @{Host="ca.patch-management.eset.systems"; Port=443; Service="ESET Connect: Patch Management (CA)"},
+    @{Host="ca.policy-management.eset.systems"; Port=443; Service="ESET Connect: Policy Management (CA)"},
+    @{Host="ca.quarantine-management.eset.systems"; Port=443; Service="ESET Connect: Quarantine Management (CA)"},
+    @{Host="ca.user-management.eset.systems"; Port=443; Service="ESET Connect: User Management (CA)"},
+    @{Host="ca.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (CA)"},
+    @{Host="ca.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (CA)"}
 )
 
 # CATATAN PENTING UNTUK ADMINISTRATOR (Tidak diuji via skrip ini):

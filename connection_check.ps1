@@ -190,6 +190,23 @@ $esetTargets = @(
     @{Host="ca.user-management.eset.systems"; Port=443; Service="ESET Connect: User Management (CA)"},
     @{Host="ca.vulnerability-management.eset.systems"; Port=443; Service="ESET Connect: Vulnerability Management (CA)"},
     @{Host="ca.web-access-protection.eset.systems"; Port=443; Service="ESET Connect: Web Access Protection (CA)"}
+
+    # ====================================================================
+    # 13. ESET Repository Servers (Dari Table 21)
+    # Semua host ini menggunakan Port 80 (HTTP) sesuai standar unduhan repositori ESET
+    # ====================================================================
+    @{Host="repository.eset.com"; Port=80; Service="ESET Repository (Global)"},
+    @{Host="repous.wip.eset.com"; Port=80; Service="ESET Repository (US WIP)"},
+    @{Host="us-repository.eset.com"; Port=80; Service="ESET Repository (US)"},
+    @{Host="us-repository.gtm.eset.com"; Port=80; Service="ESET Repository (US GTM)"},
+    @{Host="h5-repository03-v.eset.com"; Port=80; Service="ESET Repository Server (h5)"},
+    @{Host="reponocdn.wip.eset.com"; Port=80; Service="ESET Repository (NoCDN WIP)"},
+    @{Host="h1-repo01-v.eset.com"; Port=80; Service="ESET Repository Server (h1)"},
+    @{Host="hp-webs01-s.eset.com"; Port=80; Service="ESET Web Server (hp)"},
+    @{Host="h1-repository01-v.eset.com"; Port=80; Service="ESET Repository Server (h1-v)"},
+    @{Host="h3-repository02-v.eset.com"; Port=80; Service="ESET Repository Server (h3)"},
+    @{Host="91-228-167-25.ptr.eset.com"; Port=80; Service="ESET Repository (PTR Record)"},
+    @{Host="nocdn-repository.gtm.eset.com"; Port=80; Service="ESET Repository (NoCDN GTM)"}
 )
 
 # CATATAN PENTING UNTUK ADMINISTRATOR (Tidak diuji via skrip ini):
